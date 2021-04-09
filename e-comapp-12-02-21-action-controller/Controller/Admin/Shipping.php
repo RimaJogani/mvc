@@ -26,12 +26,7 @@ class Shipping extends \Controller\Core\Admin
 	                'selector'=>'#ContentGrid',
 	                'html'=>$grid
 
-              	],
-
-	            [
-	              	'selector'=>'#ContentTabHtml',
-	                'html'=>NULL
-	            ]
+              	]
 
             ]
             ];
@@ -51,8 +46,20 @@ class Shipping extends \Controller\Core\Admin
 		try
 		{
 
-			$formhtml = \Mage::getBLock('block\Admin\shipping\form')->toHtml();
-			$tabshtml = \Mage::getBLock('block\Admin\shipping\Edit\Tabs')->toHtml();
+			$edit = \Mage::getBLock('block\Admin\shipping\edit');
+			$shipping =\Mage::getModel('model\shipping');
+			if($id=$this->getRequest()->getGet('id'))
+			{
+				$shipping->load($id);
+				if(!$shipping)
+				{
+					throw new Exception("Product data not found", 1);
+					
+				}
+			}
+		
+			$edit->setTableRow($shipping);
+			$edithtml=$edit->tohtml();
 			
             $response=[
               
@@ -60,14 +67,9 @@ class Shipping extends \Controller\Core\Admin
 
                	[
 	                'selector'=>'#ContentGrid',
-	                'html'=>$formhtml
+	                'html'=>$edithtml
 
-              	],
-
-	            [
-	              	'selector'=>'#ContentTabHtml',
-	                'html'=>$tabshtml
-	            ]
+              	]
 
             ]
             ];

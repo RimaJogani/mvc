@@ -1,12 +1,13 @@
 <?php
 
-$shipping=$this->getshipping();
+$shipping=$this->getTableRow();
 
 
 ?>
+ <form class="needs-validation" id="shippingForm" method="POST" action="<?php echo $this->getUrl('shipping','save');?>">
  <div class="bg-light p-5 rounded mx-auto">
               <button type="button" class="btn bg-dark btn-md d-flex justify-content-right"><a onclick="mage.setUrl('<?php echo $this->getUrl('shipping','gridHtml');?>').resetParams().load();" href="javascript:void();" class="text-white"> View Payment</a> </button>
-           <?php if($this->getRequest()->getGet('id')):?>
+           <?php if($this->getTableRow()->shippingId):?>
             <h3 class="d-flex justify-content-center">Update Shipping</h3>
             <?php else :?>
             <h3 class="d-flex justify-content-center">Add Shipping</h3>
@@ -67,3 +68,5 @@ $shipping=$this->getshipping();
                     
                   </p>
               </div>
+            </div>
+          </form>

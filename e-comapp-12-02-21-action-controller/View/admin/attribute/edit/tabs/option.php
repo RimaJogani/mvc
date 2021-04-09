@@ -34,10 +34,12 @@ $option=$attribute->getOptions();
                   <?php endforeach;?>
                   <?php else :?>
                     <tr id="data">
-                   
-                      <td> <input type="text" class="form-control"  name="new[name]" placeholder="Name"></td>
-                      <td><input type="text" class="form-control"  name="new[SortOrder]"  placeholder="SortOrder"></td>
-                      <td><button class="btn bg-dark text-white btn-sm" type="submit"  onclick="removeRow(this);">Remove Option</button></td>
+                      <?php if($attribute->attributeId):?>
+                       <input type="hidden" name="new[attributeId]" value="<?php echo $attribute->attributeId;?>">
+                      <?php endif;?>
+                      <td> <input type="text" class="form-control"  name="new[name][]" placeholder="Name"></td>
+                      <td><input type="text" class="form-control"  name="new[sortOrder][]"  placeholder="SortOrder"></td>
+                      <td><button class="btn bg-dark text-white btn-sm" type="submit"  value="Remove Option" onclick="removeRow(this);">Remove Option</button></td>
             
                   </tr>
                 <?php endif;?>
@@ -58,8 +60,8 @@ $option=$attribute->getOptions();
         <?php if($attribute->attributeId):?>
  <input type="hidden" name="new[attributeId]" value="<?php echo $attribute->attributeId;?>">
 <?php endif;?>
-  			<td> <input type="text" class="form-control"  name="new[name]" placeholder="Name"></td>
-     		<td><input type="text" class="form-control"  name="new[SortOrder]"  placeholder="SortOrder"></td>
+  			<td> <input type="text" class="form-control"  name="new[name][]" placeholder="Name"></td>
+     		<td><input type="text" class="form-control"  name="new[sortOrder][]"  placeholder="SortOrder"></td>
           	<td><button class="btn bg-dark text-white btn-sm" type="submit"  value="Remove Option" onclick="removeRow(this);">Remove Option</button></td>
 
   		</tr>

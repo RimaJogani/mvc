@@ -9,9 +9,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <script type="text/javascript" src="<?php echo $this->baseurl('skin/admin/js/jquery-3.6.0.js');?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseurl('skin/admin/js/mage.js');?>"></script>
-
 
 
   </head>
@@ -25,7 +22,7 @@
 
             <div class = "row mt-4 d-flex align-items-center justify-content-center" style="height:530px;">
                 <div>
-                    <?php echo $this->createBlock('block_core_layout_message')->toHtml(); ?>
+                    <?php echo $this->createBlock('block\core\layout\message')->toHtml(); ?>
                 </div>
                 <div class="col-lg-12" >
                         <?php echo $this->getChild('content')->toHtml();?>                
@@ -40,3 +37,5 @@
 
   </body>
 </html>
+
+

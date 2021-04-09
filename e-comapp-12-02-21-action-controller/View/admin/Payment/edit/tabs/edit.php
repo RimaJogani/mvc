@@ -1,12 +1,13 @@
 <?php
 
-$payment=$this->getPayment();
+$payment=$this->getTableRow();
 
 
 ?>
+ <form class="needs-validation" id="paymentForm" method="POST" action="<?php echo $this->getUrl('payment','save');?>">
  <div class="bg-light p-5 rounded mx-auto">
               <button type="button" class="btn bg-dark btn-md d-flex justify-content-right"><a onclick="mage.setUrl('<?php echo $this->getUrl('payment','gridHtml');?>').resetParams().load();" href="javascript:void(0)" class="text-white"> View Payment</a> </button>
-           <?php if($this->getRequest()->getGet('id')):?>
+           <?php if($payment->paymentId):?>
             <h3 class="d-flex justify-content-center">Update Payment</h3>
             <?php else:?>
             <h3 class="d-flex justify-content-center">Add Payment</h3>
@@ -67,3 +68,5 @@ $payment=$this->getPayment();
                     
                   </p>
               </div>
+            </div>
+          </form>

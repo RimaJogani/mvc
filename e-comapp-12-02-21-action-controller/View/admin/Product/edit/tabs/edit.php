@@ -1,12 +1,12 @@
 <?php
 $product=$this->getTableRow();
+$brand=$this->getBrand();
 
-print_r($product);
 ?>
  <form method="post" id="productForm" action="<?php echo $this->getUrl('product','save'); ?>">
 <div class="bg-light p-5 rounded mx-auto">
              
-              <?php if($this->getRequest()->getGet('id')):?>
+              <?php if($product->productId):?>
             <h3 class="d-flex justify-content-center">Update Product</h3>
             <?php else :?>
             <h3 class="d-flex justify-content-center">Add Product</h3>
@@ -71,6 +71,17 @@ print_r($product);
                     <?php endforeach;?>
                             </select>
                         </div>
+                    </div>
+                      <?php if($brand):?>
+                        <div class="switch">
+                            <select name="product[brandId]" class="form-control" >
+                            <?php foreach($brand->getData() as $key => $value):?>
+                        <option value="<?php echo $value->brandId?>" <?php if($product->brandId == $value->brandId):?> selected <?php endif;?>><?php echo $value->brandName?></option>
+                    <?php endforeach;?>
+                            </select>
+                            
+                        </div>
+                      <?php endif;?>
                    
                  
                  </div>

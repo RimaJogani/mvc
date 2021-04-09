@@ -65,6 +65,7 @@ Base.prototype={
 			method : this.getMethod(),
 			url : this.getUrl(),
 			data : this.getParams(),
+			dataType : 'json',
 			success : function(response){
 				self.manageHtml(response);
 			

@@ -1,21 +1,21 @@
 <?php
 namespace Block\Admin\Category\Edit\Tabs;
-\Mage::loadFileByClassName('Block\Core\Template');
+\Mage::loadFileByClassName('Block\Core\Edit');
 
 /**
  * 
  */
-class Edit extends \Block\Core\Template
+class Edit extends \Block\Core\Edit
 {
 	  protected $category=null;
-      protected $categoriesOptions=[];
+    protected $categoriesOptions=[];
    
 	function __construct()
 	{
 		$this->setTemplate('admin/category/edit/tabs/edit.php');
 	}
 
-	public function setCategory($category = null){
+	/*public function setCategory($category = null){
             if($category){
                 $this->category=$category;
                 return $this;
@@ -37,28 +37,28 @@ class Edit extends \Block\Core\Template
                 $this->setCategory();
             }
             return $this->category;
-        }
+        }*/
 
         
 
         public function getParentOptions()
         {
          
-            //echo "<pre>";
+           
             if($this->categoriesOptions){
                 return $this->categoriesOptions;
             }
 
-             $query="SELECT `categoryId`,`categoryName` FROM `{$this->getCategory()->getTableName()}`";
+             $query="SELECT `categoryId`,`categoryName` FROM `{$this->getTableRow()->getTableName()}`";
              $options = \Mage::getModel('Model\category')->getAdapter()->fetchPair($query);
         
               if(!$this->getRequest()->getGet('id'))
               {
-                  $query1="SELECT `categoryId`,`pathId` FROM `{$this->getCategory()->getTableName()}` ORDER BY `pathId` ASC";
+                  $query1="SELECT `categoryId`,`pathId` FROM `{$this->getTableRow()->getTableName()}` ORDER BY `pathId` ASC";
               }
               else
               {
-                  $query1="SELECT `categoryId`,`pathId` FROM `{$this->getCategory()->getTableName()}` WHERE `pathId` NOT LIKE '{$this->getCategory()->pathId}%' ORDER BY pathId ASC";
+                  $query1="SELECT `categoryId`,`pathId` FROM `{$this->getTableRow()->getTableName()}` WHERE `pathId` NOT LIKE '{$this->getTableRow()->pathId}%' ORDER BY pathId ASC";
               }
        
              
@@ -70,11 +70,11 @@ class Edit extends \Block\Core\Template
                {
 
                     
-                    if($id = $this->getRequest()->getGet('id') == $categoryId){
+                    if($id = $this->getTableRow()->categoryId == $categoryId){
                       unset($this->categoriesOptions[$categoryId]);
                     }
 
-                    if($id = $this->getRequest()->getGet('id') != $categoryId)
+                    if($id = $this->getTableRow()->categoryId != $categoryId)
                     {
 
                       $pathIds=explode("=",$pathId);

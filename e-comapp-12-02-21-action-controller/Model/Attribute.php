@@ -66,21 +66,36 @@ class Attribute extends Core\Table{
 
 
 
+	/*public function getOptions()
+	{
+		if(!$this->attributeId)
+		{
+			return false;
+		}
+		
+		return \Mage::getModel($this->backendModel)
+		->setAttribute($this)
+		->getOptions();
+		
+		
+	}*/
 	public function getOptions()
 	{
 		if(!$this->attributeId)
 		{
 			return false;
 		}
-		 $query="SELECT * FROM `attribute_option`
+		$query="SELECT * FROM `attribute_option`
 		WHERE `attributeId`='{$this->attributeId}'
 		ORDER BY `sortOrder` ASC";
 		$options=\Mage::getModel('Model\Attribute\option')->fetchAll($query);
 		if(!$options){
-			return null;
+			return false;
 		}
 		return $options;
 	}
+
+
 
 
 	

@@ -1,0 +1,52 @@
+<?php
+namespace Block\Admin\ConfigGroup\Edit\Tabs;
+\Mage::loadFileByClassName('Block\Core\Edit');
+
+/**
+ * 
+ */
+class Edit extends \Block\Core\Edit
+{
+	  
+   
+   
+	function __construct()
+	{  
+        
+		$this->setTemplate('admin/configgroup/edit/tabs/edit.php');
+	}
+
+	/*public function setAttribute($attribute = null){
+            if($attribute){
+                $this->attribute=$attribute;
+                return $this;
+            }
+            
+             $attribute=\Mage::getModel('Model\attribute');
+             
+                if($id = $this->getRequest()->getGet('id')){
+                    $attribute=$attribute->load($id);
+                   
+                }
+                $this->attribute=$attribute;
+              
+            return $this;
+
+        }
+        public function getAttribute(){
+            if(!$this->attribute){
+                $this->setAttribute();
+            }
+            return $this->attribute;
+        }
+*/
+        
+
+        
+
+        
+        
+        
+
+}
+?>

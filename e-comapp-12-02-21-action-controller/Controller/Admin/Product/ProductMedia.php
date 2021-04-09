@@ -11,27 +11,27 @@ class ProductMedia extends \Controller\Core\Admin
 
         try 
         {
-               
-                $fileName = $_FILES['image']['name'];
-                $fileTmp = $_FILES['image']['tmp_name'];
-                $newName = rand(1000,9999)."-".$fileName;
+           
+            $fileName = $_FILES['image']['name'];
+            $fileTmp = $_FILES['image']['tmp_name'];
+            $newName = rand(1000,9999)."-".$fileName;
 
 
-                 move_uploaded_file($fileTmp, "./skin/admin/images/{$this->getRequest()->getGet('id')}".$newName);
-                    
-                        $productId = $this->getRequest()->getGet('id');
-                        $productmedia = \Mage::getModel("Model\product\productmedia");
-                        $productmedia->productId = $productId;
-                        $productmedia->imageName = $newName;
+            move_uploaded_file($fileTmp, "./skin/admin/images/product/{$this->getRequest()->getGet('id')}".$newName);
+                
+            $productId = $this->getRequest()->getGet('id');
+            $productmedia = \Mage::getModel("Model\product\productmedia");
+            $productmedia->productId = $productId;
+            $productmedia->imageName = $newName;
 
-                       if($productmedia->save())
-						{
-							$this->getMessage()->setSuccess('Image Upload  successfully.');
-						}
-                        else
-                        {
-							$this->getMessage()->setSuccess( $errors);
-						}
+            if($productmedia->save())
+			{
+				$this->getMessage()->setSuccess('Image Upload  successfully.');
+			}
+            else
+            {
+				$this->getMessage()->setSuccess( $errors);
+			}
                    
            
         } 
@@ -47,14 +47,37 @@ class ProductMedia extends \Controller\Core\Admin
     {
         try 
         {
-
+            
             if (!$this->getRequest()->getGet('id')) 
             {
                 $this->redirect('gridHtml',null, null, true);
             }
 
             $imageData = $this->getRequest()->getPost('image');
-           // print_r($imageData);
+            /*
+            //print_r($imageData);
+            $fields = ['base', 'thumb', 'small'];
+            foreach ($fields as $value) 
+            {   
+               
+                foreach ($imageData as $key => $image) 
+                {
+                    //print_r($key);
+                    if (!array_key_exists($value, $image)) 
+                    {
+                        $imageData[$key][$value] = 0;
+                    }
+                }
+            }
+            foreach ($imageData as $key => $value) 
+            {
+                $productMedia =\Mage::getModel('model\product\productmedia');
+                $productMedia->load($key);
+                $productMedia->setData($value);
+                $productMedia->save();
+            }
+           */echo "<pre>";
+            //print_r($imageData);
             if(!$imageData)
             {
                 throw new Exception("No Product Found To Update Or Delete !!", 1);
@@ -80,9 +103,11 @@ class ProductMedia extends \Controller\Core\Admin
                 unset($imageData['base']);
             }
             
-
-                foreach ($imageData as $key => $value) 
-                {
+            //echo $small." ".$thumb." " .$base;
+                foreach ($imageData as $key => &$value) 
+                {   
+                    print_r($key);
+                    print_r($value);
                     if (array_key_exists('remove', $value)) 
                     {
                         unset($value['remove']);
@@ -107,55 +132,55 @@ class ProductMedia extends \Controller\Core\Admin
                     {
                         $value['small'] = 0;
                     }
-                }
-                if(!array_key_exists('thumb', $value)) 
-                {
-                    $value['thumb'] = 0;
-                }
-
-                if (!array_key_exists('gallery', $value)) 
-                {
-                    $value['gallery'] = 0;
-                }
-                else 
-                {
-                    $value['gallery'] = 1;
-                }
-                echo 11;
-                $values = array_values($value);
-                $fields = array_keys($value);
-                $final = null;
-
-                for ($i = 0; $i < count($fields); $i++) 
-                {
-                    if ($fields[$i] == $key) 
+                    if(!array_key_exists('thumb', $value)) 
                     {
-                        $id = $values[$i];
-                        continue;
+                        $value['thumb'] = 0;
                     }
-                    $final = $final . "`" . $fields[$i] . "`='" . $values[$i] . "',";
-                }
-
-                $final = rtrim($final, ",");
-                $query = "UPDATE `productmedia` SET {$final} WHERE `productmediaId` = '{$key}'";
-
-                $upModel =\Mage::getModel('model\product\productmedia');
-                if ($upModel->update($query))  
-                {
-                    $this->getMessage()->setSuccess("Product Images update For Product !!");
-                }
-                else
-                {
-                    $this->getMessage()->setSuccess("Unable To Update Product Image !!");
-                }
+                    if (!array_key_exists('gallery', $value)) 
+                    {
+                        $value['gallery'] = 0;
+                    }
+                    else 
+                    {
+                        $value['gallery'] = 1;
+                    }
                 
+                    $values = array_values($value);
+                    $fields = array_keys($value);
+                    print_r($values);
+                    print_r($fields);
+                    $final = null;
+               
+                    for ($i = 0; $i < count($fields); $i++) 
+                    {
+                        if ($fields[$i] == $key) 
+                        {
+                            $id = $values[$i];
+                            continue;
+                        }
+                        $final = $final . "`" . $fields[$i] . "`='" . $values[$i] . "',";
+                    }
+
+                    $final = rtrim($final, ",");
+                    echo $query = "UPDATE `productmedia` SET {$final} WHERE `productmediaId` = '{$key}'";
+                
+                    $upModel =\Mage::getModel('model\product\productmedia');
+                    if ($upModel->update($query))  
+                    {
+                        $this->getMessage()->setSuccess("Product Images update For Product !!");
+                    }
+                    else
+                    {
+                        $this->getMessage()->setSuccess("Unable To Update Product Image !!");
+                    }
+                }
               
         } 
         catch (Exception $e) 
         {
             $this->getMessage()->setFailure($e->getMessage());
         }
-        $this->redirect('form', 'product', null, false);
+        //$this->redirect('form', 'product', null, false);
     }
 
 
@@ -189,7 +214,7 @@ class ProductMedia extends \Controller\Core\Admin
                 {
                   
                     $imgName=$value->imageName;
-                    unlink("./skin/admin/images/{$value->productId}" . $imgName);
+                    unlink("./skin/admin/images/product/{$value->productId}" . $imgName);
                 }
                  
                 if($delModel->delete(null,$query))

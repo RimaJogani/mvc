@@ -1,7 +1,5 @@
 <?php
-
 $attribute=$this->getAttribute();
-
 ?>
 
  <form method="post" id="attributeForm" action="<?php echo $this->getUrl('product','save'); ?>">

@@ -1,12 +1,14 @@
 <?php
 namespace Block\Admin\Attribute\Edit\Tabs;
 \Mage::loadFileByClassName('Block\Core\Template');
+\Mage::loadFileByClassName('Block\Core\Edit\Traits');
 /**
  * 
  */
 class Option extends \Block\Core\Template
 {
 	//protected $options=[];
+    use \Block\Core\Edit\Traits;
 	public $attribute=null;
 	
 	public function __construct()

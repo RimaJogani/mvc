@@ -1,9 +1,10 @@
 <?php
-$cms=$this->getCms();
+$cms=$this->getTableRow();
 ?>
+ <form class="needs-validation" id="cmsForm" method="POST" action="<?php echo $this->getUrl('cms','save');?>">
  <div class="bg-light p-5 rounded mx-auto">
               <button type="button" class="btn bg-dark btn-md d-flex justify-content-right"><a onclick="mage.setUrl('<?php echo $this->getUrl('cms','gridHtml');?>').resetParams().load();" href="javascript:void(0)" class="text-white"> View CMS</a> </button>
-           <?php if($this->getRequest()->getGet('id')):?>
+           <?php if($cms->pageId):?>
             <h3 class="d-flex justify-content-center">Update CMS</h3>
             <?php else:?>
             <h3 class="d-flex justify-content-center">Add CMS</h3>
@@ -58,6 +59,8 @@ $cms=$this->getCms();
                     
                   </p>
               </div>
+            </div>
+          </form>
 
   <script>
   initSample();

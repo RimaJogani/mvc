@@ -1,9 +1,10 @@
 <?php
-$customerGroup=$this->getCustomerGroup();
+$customerGroup=$this->getTableRow();
 ?>
+<form class="needs-validation" novalidate="" id="customerGroupForm" action="<?php echo $this->getUrl('Customer_CustomerGroup','save');?>" method="post">
 <div class="bg-light p-5 rounded mx-auto">
               <button type="button" class="btn bg-dark btn-md d-flex justify-content-right"><a onclick="mage.setUrl('<?php echo $this->getUrl('Customer_CustomerGroup','gridHtml');?>').resetParams().load();" href="javascript:void(0)" class="text-white "> View CustomerGroup</a> </button>
-              <?php if($this->getRequest()->getGet('id')):?>
+              <?php if($customerGroup->customerGroupId):?>
             <h3 class="d-flex justify-content-center">Update CustomerGroup</h3>
             <?php else:?>
             <h3 class="d-flex justify-content-center">Add CustomerGroup</h3>
@@ -42,3 +43,6 @@ $customerGroup=$this->getCustomerGroup();
                    
                   </p>
               </div>
+            </div>
+          </div>
+        </form>

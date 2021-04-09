@@ -1,21 +1,22 @@
 <?php
 namespace Block\Admin\Attribute\Edit\Tabs;
-\Mage::loadFileByClassName('Block\Core\Template');
+\Mage::loadFileByClassName('Block\Core\Edit');
 
 /**
  * 
  */
-class Edit extends \Block\Core\Template
+class Edit extends \Block\Core\Edit
 {
 	  protected $attribute=null;
    
    
 	function __construct()
 	{  
+        
 		$this->setTemplate('admin/attribute/edit/tabs/edit.php');
 	}
 
-	public function setAttribute($attribute = null){
+	/*public function setAttribute($attribute = null){
             if($attribute){
                 $this->attribute=$attribute;
                 return $this;
@@ -38,7 +39,7 @@ class Edit extends \Block\Core\Template
             }
             return $this->attribute;
         }
-
+*/
         
 
         

@@ -24,10 +24,6 @@ class Cms extends \Controller\Core\Admin
                 'selector'=>'#ContentGrid',
                 'html'=>$grid
 
-              ],
-              [
-                'selector'=>'#ContentTabHtml',
-                'html'=>NULL
               ]
             ]
 
@@ -47,19 +43,26 @@ class Cms extends \Controller\Core\Admin
 	{
 		try
 		{
-			$formhtml = \Mage::getBLock('block\Admin\cms\form')->toHtml();
-	        $tabshtml = \Mage::getBLock('block\Admin\cms\edit\Tabs')->toHtml();
+			$edit = \Mage::getBLock('block\Admin\cms\edit');
+	       	$cms=\Mage::getModel('model\cms');
+	        if($id=$this->getRequest()->getGet('id'))
+	        {
+	          $cms->load($id);
+	          if(!$cms)
+	          {
+	            throw new Exception("Not record found", 1);
+	            
+	          }
+	        }
+	        $edit->setTableRow($cms);
+	        $edithtml=$edit->toHtml();
 	        $response=[
               
               'element'=>[
               [
                 'selector'=>'#ContentGrid',
-                'html'=>$formhtml
+                'html'=>$edithtml
 
-              ],
-              [
-                'selector'=>'#ContentTabHtml',
-                'html'=>$tabshtml
               ]
             ]
 

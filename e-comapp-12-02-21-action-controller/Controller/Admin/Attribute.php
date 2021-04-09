@@ -43,23 +43,33 @@ class  Attribute extends \Controller\Core\Admin
     {
         try{
 
-            $formhtml = \Mage::getBLock('block\Admin\attribute\form')->toHtml();
-            $tabshtml = \Mage::getBLock('block\Admin\attribute\edit\Tabs')->toHtml();
+            $edit = \Mage::getBLock('block\Admin\attribute\edit');
+            $attribute=\Mage::getModel('model\attribute');
+
+            if($id=$this->getRequest()->getGet('id'))
+            {
+              $attribute->load($id);
+              if(!$attribute)
+              {
+                throw new Exception("Product data not found", 1);
+                
+              }
+            }
+    
+            $edit->setTableRow($attribute);
+            
+            $edithtml=$edit->tohtml();
             $response=[
 
               'element'=>[
 
                 [
                   'selector'=>'#ContentGrid',
-                  'html'=>$formhtml
+                  'html'=>$edithtml
 
                 ],
 
-                [
-                'selector'=>'#ContentTabHtml',
-                  'html'=>$tabshtml
-                ]
-
+                
 
               ]
             ];
@@ -91,7 +101,7 @@ class  Attribute extends \Controller\Core\Admin
               }
             }
             $attributeData=$this->getRequest()->getPost('attribute');
-            print_r($attributeData);
+           // print_r($attributeData);
             echo $query="ALTER TABLE {$attributeData['entityTypeId']} ADD {$attributeData['name']} {$attributeData['backendType']}";
             $attribute->getAdapter()->query($query);
             $attribute->setData($attributeData);
@@ -128,6 +138,21 @@ class  Attribute extends \Controller\Core\Admin
             $this->getMessage()->setFailure($e->getMessage());
             $this->redirect("gridHtml",null,null,true);
          }
+    }
+
+    public function testAction()
+    {
+      echo "<pre>";
+      $query = "SELECT * FROM `attribute` WHERE `entityTypeId` = 'product'";
+      $attributes = \Mage::getModel("Model\attribute")->fetchAll($query);
+      //print_r($attributes);
+
+      foreach ($attributes->getData() as $key => $attribute) 
+      {
+          print_r($attribute->getOptions());
+
+      }
+      
     }
     
 

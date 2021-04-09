@@ -1,6 +1,5 @@
 
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +13,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script type="text/javascript" src="<?php echo $this->baseurl('skin/admin/js/jquery.js');?>"></script>
-      <script type="text/javascript" src="<?php echo $this->baseurl('skin/admin/js/mage.js');?>"></script>
+    <script type="text/javascript" src="<?php echo $this->baseurl('skin/admin/js/mage.js');?>"></script>
+    <script src="<?php echo $this->baseurl('skin/admin/js/ckeditor.js');?>"></script>
+    <script src="<?php echo $this->baseurl('skin/admin/js/sample.js');?>"></script>
     <title>Document</title> 
 
     
@@ -56,9 +57,12 @@
                 <a class="nav-link active" aria-current="page" onclick="mage.setUrl('<?php echo $this->getUrl('Shipping','gridHtml',[],true)?>').load();" href="javascript:void(0)">Shipping</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link active" aria-current="page" onclick="mage.setUrl('<?php echo $this->getUrl('Brand','gridHtml',[],true)?>').load();" href="javascript:void(0)" >Brand</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link active" aria-current="page" onclick="mage.setUrl('<?php echo $this->getUrl('Cms','gridHtml',[],true)?>').load();" href="javascript:void(0)" >Cms Page</a>
               </li>
-
+               
              
             </ul>
            

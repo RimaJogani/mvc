@@ -27,11 +27,6 @@ class  CustomerGroup extends \Controller\Core\Admin
                   'selector'=>'#ContentGrid',
                   'html'=>$grid
 
-                ],
-
-                [
-                'selector'=>'#ContentTabHtml',
-                  'html'=>null
                 ]
 
 
@@ -55,24 +50,28 @@ class  CustomerGroup extends \Controller\Core\Admin
         try
         {
 
-            $form = \Mage::getBLock('block\Admin\CustomerGroup\form');
-            $tabs = \Mage::getBLock('block\Admin\CustomerGroup\edit\Tabs');
-            $layout=$this->getLayout();
-            $tabshtml=$layout->getLeft()->addChild($tabs,'tabs')->tohtml();
-            $formhtml=$layout->getContent()->addChild($form,'Form')->tohtml();
+            $edit = \Mage::getBLock('block\Admin\CustomerGroup\edit');
+            $customerGroup=\Mage::getModel('model\customer\customergroup');
+            if($id=$this->getRequest()->getGet('id'))
+            {
+              $customerGroup->load($id);
+                if(!$customerGroup )
+                {
+                    throw new Exception("Product data not found", 1);
+                    
+                }
+
+            }
+          $edit->setTableRow($customerGroup);
+          $edithtml=$edit->tohtml();
             $response=[
 
               'element'=>[
 
                 [
                   'selector'=>'#ContentGrid',
-                  'html'=>$formhtml
+                  'html'=>$edithtml
 
-                ],
-
-                [
-                'selector'=>'#ContentTabHtml',
-                  'html'=>$tabshtml
                 ]
 
 
@@ -131,7 +130,7 @@ class  CustomerGroup extends \Controller\Core\Admin
              }
          
          
-          $this->redirect("gridHtml",null,null,true);
+          $this->redirect("gridHtml","customer_customerGroup",null,true);
          
         
         }
@@ -139,7 +138,7 @@ class  CustomerGroup extends \Controller\Core\Admin
         {
             
             $this->getMessage()->setFailure($e->getMessage());
-            $this->redirect("gridHtml",null,null,true);
+            $this->redirect("gridHtml","customer_customerGroup",null,true);
            
         }
 

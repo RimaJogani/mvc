@@ -1,80 +1,201 @@
 <?php
 namespace Block\Admin\Customer;
 
-\Mage::getController("Block\Core\Template");
-class Grid extends \Block\Core\Template{
+\Mage::loadFileByClassName("Block\Core\Grid");
 
-        protected $template=null;
-        protected $customers=[];
-        
-       
+class Grid extends \Block\Core\Grid
+{
+    
+        public function prepareCollection()
+        {
+           $customer=\Mage::getModel('Model\customer');
+            
+              $query="SELECT customer.customerId,customer.createDate,customergroup.customerGroupName,customeraddress.zipcode,customer.firstName,customer.lastName,customer.email,customer.contactNo,customer.status FROM ((customer LEFT JOIN customergroup ON customer.customerGroupId = customergroup.customerGroupId) LEFT JOIN customeraddress ON customer.customerId = customeraddress.customerId AND customeraddress.addressType = 'Billing')";
 
-        public function __construct(){
-            parent::__construct();
-          $this->setTemplate('admin/customer/grid.php');
-        }
+             
 
-       
-        public function setCustomers($customers = null){
-            if(!$customers){
-                $customer=\Mage::getModel('Model\customer');
+              $cutomers=$customer->fetchAll($query);
+             
+            $this->setCollections($cutomers);
 
-                $customers=$customer->fetchAll();
-                // $customers=$customer->customerGroupId();
-
-            }
-            $this->customers=$customers;
             return $this;
 
         }
-        public function getCustomers(){
-            if(!$this->customers){
-                $this->setCustomers();
-            }
-            return $this->customers;
+
+        
+        public function prepareColumns()
+        {
+            $this->addColumn('customerId',[
+
+                'field' => 'customerId',
+                'label' => 'customer Id',
+                'type' => 'number'
+            ]);
+            $this->addColumn('customerGroupName',[
+
+                'field' => 'customerGroupName',
+                'label' => 'customerGroupName',
+                'type' => 'text'
+            ]);
+            $this->addColumn('zipcode',[
+
+                'field' => 'zipcode',
+                'label' => 'zipcode',
+                'type' => 'number'
+            ]);
+            $this->addColumn('firstName',[
+
+                'field' => 'firstName',
+                'label' => 'firstName',
+                'type' => 'text'
+            ]);
+            $this->addColumn('lastName',[
+
+                'field' => 'lastName',
+                'label' => 'lastName',
+                'type' => 'text'
+            ]);
+            $this->addColumn('email',[
+
+                'field' => 'email',
+                'label' => 'email',
+                'type' => 'text'
+            ]);
+
+            $this->addColumn('contactNo',[
+
+                'field' => 'contactNo',
+                'label' => 'contactNo',
+                'type' => 'text'
+            ]);
+            $this->addColumn('status',[
+
+                'field' => 'status',
+                'label' => 'Status',
+                'type' => 'number'
+            ]);
+
+            $this->addColumn('createdDate',[
+
+                'field' => 'createDate',
+                'label' => 'CreatedDate',
+                'type' => 'number'
+            ]);
+            
+
+            return $this;
+            
         }
-        public function getCustomerGrorpName($customerGroupId){
+        
+        public function prepareActions()
+        {
+           
+            $this->addActions('edit',[
 
-            $customerGroup=\Mage::getModel('Model\customerGroup');
-            $data=$customerGroup->load($customerGroupId);
-            return $data->customerGroupName;
-        }
-
- public function customerData(){
-          
-              $customerob=\Mage::getModel('Model\customer');
-            // print_r($customerob);
-           // $query="SELECT
-
-           //              `cg.customergroupName`,
-           //             ` a.zipcode`,
-           //              `c.firstName`,   
-           //              `c.lastName`,
-           //              `c.email`,
-           //              `c.contactNo`,
-           //              `c.status `
-
-
-           //          FROM `customer` AS `c`
-           //          JOIN `customergroup` as `cg`
-
-           //          ON `c.customerGroupId`=`cg.customerGroupId`
-
-           //          JOIN `customeraddress` as `a`
-
-           //          ON `c.customerId`=`a.customerId` and `a.addressType`='billing' ";
-              $query="SELECT customer.customerId,customer.createDate,customergroup.customerGroupName,customeraddress.zipcode,customer.firstName,customer.lastName,customer.email,customer.contactNo,customer.status FROM ((customer LEFT JOIN customergroup ON customer.customerGroupId = customergroup.customerGroupId) LEFT JOIN customeraddress ON customer.customerId = customeraddress.customerId AND customeraddress.addressType = 'Billing')";
-
-            //   SELECT customer.customerId,customer.firstName,customer.lastName,customer.email,customer.status ,customer.createdDate, customer_group.name , customer_address.zipcode
-            // FROM ((customer LEFT JOIN customer_group ON customer.groupId = customer_group.groupId)
-            // LEFT JOIN customer_address ON customer.customerId = customer_address.customerId AND customer_address.addressType = 'billing')
+                'label' => 'Edit',
+                'method' => 'getEditUrl',
+                'class' => 'btn btn-warning',
+                'ajax' => true
+            ]);
              
 
-              $cutomerData=$customerob->fetchAll($query);
-             //print_r($cutomerData);die();
-              return $cutomerData;
+             $this->addActions('delete',[
+
+                'label' => 'Delete',
+                'method' => 'getDeleteUrl',
+                'class' => 'btn btn-danger',
+                'ajax' => true
+            ]);
+              return $this;
+            
+        }
+        
+
+        
+        public function prepareStatus()
+        {
+            $this->addStatus('1',[
+
+                'label' => 'Enable',
+                'method' => 'getStatusUrl',
+                'class' => 'btn btn-success',
+                'ajax' => true
+            ]);
+             $this->addStatus('0',[
+
+                'label' => 'Disable',
+                'method' => 'getStatusUrl',
+                'class' => 'btn btn-danger',
+                'ajax' => true
+            ]);
+             
+              return $this;
+
+            
+        }
+        
+        
+        public function prepareButtons()
+        {
+            $this->addButton('addnew',[
+
+                'label' => 'Add customer',
+                'method' => 'getAddnewUrl',
+                'class' => 'btn btn-success',
+                'ajax' => true
+            ]);
+
+            return $this;
         }
 
+
+        public function getStatusUrl($row, $ajax)
+        {
+            if (!$ajax) {
+                return "{$this->getUrl('Customer','status',['id'=>$row->customerId,'status'=>$row->status])}";
+            }
+            $url = $this->getUrl('Customer','status',['id'=>$row->customerId,'status'=>$row->status]); 
+            return "mage.setUrl('{$url}').resetParams().load()";
+        }
+
+        public function getEditUrl($row, $ajax)
+        {
+          
+            if (!$ajax) {
+                return "{$this->getUrl('Customer','form',['id'=>$row->customerId])}";
+            }
+            $url = $this->getUrl('Customer','form',['id'=>$row->customerId]);
+        return "mage.setUrl('{$url}').resetParams().load()";
+        }
+
+        public function getDeleteUrl($row, $ajax)
+        {
+            if (!$ajax) {
+                return "{$this->getUrl('Customer','delete', ['id' => $row->customerId])}";
+            }
+            $url=$this->getUrl('Customer','delete', ['id' => $row->customerId]);
+            return "mage.setUrl('{$url}').resetParams().load()";
+        }
        
+       
+
+        public function getAddnewUrl($ajax)
+        {
+            $url= $this->getUrl('Customer','form');
+            return "mage.setUrl('{$url}').resetParams().load()";
+        }
+
+        public function getTitle()
+        {
+            return 'Manage Products';
+        }
+
 }
+
+
+
+        
+
+       
+
 ?>

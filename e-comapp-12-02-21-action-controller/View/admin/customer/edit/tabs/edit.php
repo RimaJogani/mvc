@@ -1,11 +1,11 @@
 <?php
-$customer=$this->getCustomer();
+$customer=$this->getTableRow();
 $customerGroup=$this->getCustomerGroup();
 ?> 
 <form class="needs-validation" id="customerForm" action="<?php echo $this->getUrl('customer','save');?>" method="POST">
 <div class="bg-light p-5 rounded mx-auto">
-              <button type="button" class="btn bg-dark btn-md d-flex justify-content-right"><a onclick="mage.setUrl('<?php echo $this->getUrl('Customer','grid');?>').resetParams().load();" href="javascript:void(0)" class="text-white "> View Customer</a> </button>
-              <?php if($this->getRequest()->getGet('id')):?>
+              <button type="button" class="btn bg-dark btn-md d-flex justify-content-right"><a onclick="mage.setUrl('<?php echo $this->getUrl('Customer','gridHtml');?>').resetParams().load();" href="javascript:void(0)" class="text-white "> View Customer</a> </button>
+              <?php if($customer->customerId):?>
             <h3 class="d-flex justify-content-center">Update Customer</h3>
             <?php else:?>
             <h3 class="d-flex justify-content-center">Add Customer</h3>

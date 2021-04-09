@@ -15,15 +15,16 @@ class Template{
 
         public function setTemplate($template)
         {
-        // echo 111;
+
         $this->template="View/".$template;
+
         return $this;
 
         }
         public function getTemplate(){
 
             // echo 222;
-            // print_r($this->template);
+             //print_r($this->template);
             return $this->template;
         }
        
@@ -31,10 +32,13 @@ class Template{
         {
            
             ob_start();
-            // $abc = $this->getTemplate();
+            /*$abc = $this->getTemplate();
+            print_r($abc);*/
             require_once $this->getTemplate();
             $content = ob_get_contents();
+            print_r($content);
             ob_end_clean();
+
             return $content;
         }
        
@@ -55,7 +59,7 @@ class Template{
         }
         
         public function getUrl($controllarName=null, $actionName=null, $prams=[], $resetparam = false)
-        {   
+        {  
             $url = \Mage::getModel('model\core\url');
             return $url->getUrl($controllarName,$actionName,$prams,$resetparam);
         }

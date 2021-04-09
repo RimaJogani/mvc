@@ -25,10 +25,6 @@ class  Category extends \Controller\Core\Admin
                 'selector'=>'#ContentGrid',
                 'html'=>$grid
 
-              ],
-              [
-                'selector'=>'#ContentTabHtml',
-                'html'=>NULL
               ]
             ]
 
@@ -49,22 +45,29 @@ class  Category extends \Controller\Core\Admin
         try
         {
 
-            $formhtml = \Mage::getBLock('block\Admin\Category\form')->tohtml();
-            $tabshtml = \Mage::getBLock('block\Admin\Category\edit\Tabs')->tohtml();
-         
+            $edit = \Mage::getBLock('block\Admin\Category\edit');
+            $category=\Mage::getModel('model\category');
+            if($id=$this->getRequest()->getGet('id'))
+            {
+              $category->load($id);
+                if(!$category)
+                {
+                    throw new Exception("Product data not found", 1);
+                    
+                }
+
+            }
+            $edit->setTableRow($category);
+            $edithtml=$edit->tohtml();
+           
             $response=[
 
               'element'=>[
 
                 [
                   'selector'=>'#ContentGrid',
-                  'html'=>$formhtml
+                  'html'=>$edithtml
 
-                ],
-
-                [
-                'selector'=>'#ContentTabHtml',
-                  'html'=>$tabshtml
                 ]
 
 

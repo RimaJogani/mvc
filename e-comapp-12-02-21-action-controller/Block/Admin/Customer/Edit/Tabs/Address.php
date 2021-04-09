@@ -1,11 +1,13 @@
 <?php
 namespace Block\Admin\Customer\Edit\Tabs;
 \Mage::loadFileByClassName('Block\Core\Template');
+\Mage::loadFileByClassName('Block\Core\Edit\Traits');
 /**
  * 
  */
 class Address extends \Block\Core\Template
 {
+      use \Block\Core\Edit\Traits;
       protected $shipping=null;
       protected $billing=null;
 	
@@ -28,11 +30,8 @@ class Address extends \Block\Core\Template
                         $row = $billing->fetchRow($query);
                         $this->billing=$row;
                       }
-
              
-              	
-                        //var_dump($billing);
-                        
+
                        
                   }
                     

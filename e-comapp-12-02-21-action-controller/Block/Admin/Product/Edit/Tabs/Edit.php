@@ -6,11 +6,34 @@ namespace Block\Admin\Product\Edit\Tabs;
  */
 class Edit  extends \Block\Core\Edit
 {
-	 protected $product=null;
+	 protected $brand=null;
 	function __construct()
 	{
 		$this->setTemplate('admin/product/edit/tabs/edit.php');
 	}
+    public function setBrand($brand = null){
+
+            if($brand){
+                $this->brand=$brand;
+                return $this;
+            }
+            
+            $brand=\Mage::getModel('Model\brand');
+            
+            $brand=$brand->fetchAll();
+                
+            $this->brand=$brand;
+              
+            return $this;
+
+        }
+        public function getBrand(){
+            if(!$this->brand){
+                $this->setBrand();
+            }
+            return $this->brand;
+        }
+
 	/*public function setProduct($product = null){
             if($product){
                 $this->product=$product;

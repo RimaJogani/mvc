@@ -6,7 +6,7 @@ class ProductMedia extends \Model\Core\Table{
     public function __construct()
     {
         parent::__construct();
-        $this->setTableName('productmedia')->setPrimaryKey('productmediaId');
+        $this->setTableName('productmedia')->setPrimaryKey('productMediaId');
     }
 }
 

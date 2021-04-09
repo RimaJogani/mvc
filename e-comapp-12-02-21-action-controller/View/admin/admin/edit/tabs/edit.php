@@ -1,5 +1,6 @@
 <?php
-$admin=$this->getAdmin();
+$admin=$this->getTableRow();
+
 ?>
  <form class="needs-validation"  action="<?php echo $this->getUrl('admin','save');?>" id="adminForm" method="post">
  <div class="bg-light p-5 rounded mx-auto">

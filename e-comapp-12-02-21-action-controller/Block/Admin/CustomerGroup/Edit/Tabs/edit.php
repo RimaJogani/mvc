@@ -1,20 +1,20 @@
 <?php
 namespace Block\Admin\CustomerGroup\Edit\Tabs;
-\Mage::loadFileByClassName('Block\Core\Template');
+\Mage::loadFileByClassName('Block\Core\Edit');
 
 /**
  * 
  */
-class Edit extends \Block\Core\Template
+class Edit extends \Block\Core\Edit
 {
-	  protected $customerGroup=null;
+	  //protected $customerGroup=null;
 	
 	function __construct()
 	{
 		$this->setTemplate('admin/customer_group/edit/tabs/edit.php');
 	}
 
-	public function setCustomerGroup($customerGroup = null){
+	/*public function setCustomerGroup($customerGroup = null){
             if($customerGroup){
                 $this->customerGroup=$customerGroup;
                 return $this;
@@ -35,7 +35,7 @@ class Edit extends \Block\Core\Template
                 $this->setCustomerGroup();
             }
             return $this->customerGroup;
-        }
+        }*/
 
 
 }

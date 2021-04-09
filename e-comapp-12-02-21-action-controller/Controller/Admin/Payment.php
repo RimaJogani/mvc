@@ -27,10 +27,6 @@ class Payment extends \Controller\Core\Admin
 	                'selector'=>'#ContentGrid',
 	                'html'=>$grid
 
-	              ],
-	              [
-	                'selector'=>'#ContentTabHtml',
-	                'html'=>NULL
 	              ]
 	            ]
 
@@ -51,19 +47,27 @@ class Payment extends \Controller\Core\Admin
 		try
 		{
 
-			$formhtml = \Mage::getBLock('block\Admin\payment\form')->toHtml();
-            $tabshtml = \Mage::getBLock('block\Admin\payment\edit\Tabs')->toHtml();
+			$edit = \Mage::getBLock('block\Admin\payment\edit');
+			$payment =\Mage::getModel('model\payment');
+			if($id=$this->getRequest()->getGet('id'))
+			{
+				$payment->load($id);
+				if(!$payment)
+				{
+					throw new Exception("Product data not found", 1);
+					
+				}
+			}
+		
+			$edit->setTableRow($payment);
+			$edithtml=$edit->tohtml();
             $response=[
 	              
 	              'element'=>[
 	              [
 	                'selector'=>'#ContentGrid',
-	                'html'=>$formhtml
+	                'html'=>$edithtml
 
-	              ],
-	              [
-	                'selector'=>'#ContentTabHtml',
-	                'html'=>$tabshtml
 	              ]
 	            ]
 

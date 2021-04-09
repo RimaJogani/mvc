@@ -1,11 +1,11 @@
 <?php
 $categories=$this->getParentOptions();
-$category=$this->getCategory();
+$category=$this->getTableRow();
 ?>
 <form class="needs-validation" id="categoryForm" action="<?php echo $this->getUrl('category','save');?>" method="post">
 <div class="bg-light p-5 rounded mx-auto">
               <button type="button" class="btn bg-dark btn-md d-flex justify-content-right"><a onclick="mage.setUrl('<?php echo $this->getUrl('category','gridHtml');?>').resetParams().load();" href="javascript:void(0)" href="" class="text-white "> View Category</a> </button>
-              <?php if($this->getRequest()->getGet('id')):?>
+              <?php if($category->categoryId):?>
             <h3 class="d-flex justify-content-center">Update Category</h3>
             <?php else:?>
             <h3 class="d-flex justify-content-center">Add Category</h3>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Model;
 
 
@@ -22,6 +23,21 @@ class Customer extends Core\Table{
 
 		];
 	}
+
+    public function getBillingAddress()
+    {
+        $query = "select * from `customeraddress` where `addressType` = 'billing' and `customerId` = {$this->customerId}";
+        $address = \Mage::getModel('Model\Customer')->fetchRow($query);
+        return $address;
+    }
+
+    public function getShippingAddress()
+    {
+        $query = "select * from `customeraddress` where `addressType` = 'shipping' and `customerId` = {$this->customerId}";
+        $address = \Mage::getModel('Model\Customer')->fetchRow($query);
+        return $address;
+    }
+
 
     
 

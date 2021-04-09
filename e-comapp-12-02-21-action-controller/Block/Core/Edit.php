@@ -27,7 +27,7 @@ class Edit extends Template
 			}
 			$blockName = $tabs[$tab]['block'];
 			$block = \Mage::getBlock($blockName);
-			print_r($block);
+			//print_r($block);
 			$block->setTableRow($this->getTableRow());
 			
 			echo $block->toHtml();

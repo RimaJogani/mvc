@@ -30,11 +30,13 @@ class Mage{
 
 	public static function getModel($className)
 	{
+
 		return \Mage::getController($className);
 	}
 
 	public static function getBlock($className)
 	{
+
 		return \Mage::getController($className);
 	}
 

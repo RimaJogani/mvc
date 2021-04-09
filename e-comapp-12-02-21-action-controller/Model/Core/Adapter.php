@@ -7,7 +7,7 @@ class Adapter{
 		'host' => 'localhost',
 		'username' => 'root',
 		'password' => '',
-		'database' => 'onlineapp'
+		'database' => 'applicationcybercome'
 
 		];
 	private $connect=null;
@@ -59,8 +59,11 @@ class Adapter{
 				 $this->getConnection();
 
 			}
+
 			$result = $this->getConnect()->query($query);
+			
 			$rows = $result->fetch_all(MYSQLI_ASSOC);
+			
 			return $rows;
 	}
 
@@ -74,7 +77,7 @@ class Adapter{
 			//echo $query;
         	$result = $this->getConnect()->query($query);
         	//print_r($result);
-			if($result->num_rows>0)
+			if($result->num_rows > 0)
 			{
 				
 				return $result->fetch_assoc();

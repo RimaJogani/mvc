@@ -1,11 +1,11 @@
 <?php
 namespace Block\Admin\Admin\Edit\Tabs;
-\Mage::loadFileByClassName('Block\Core\Template');
+\Mage::loadFileByClassName('Block\Core\Edit');
 
 /**
  * 
  */
-class Edit extends \Block\Core\Template
+class Edit extends \Block\Core\Edit
 {
 
 	 protected $admin=null;	
@@ -13,7 +13,7 @@ class Edit extends \Block\Core\Template
 	{
 			$this->setTemplate('admin/admin/edit/tabs/edit.php');
 	}
-	public function setAdmin($admin = null){
+	/*public function setAdmin($admin = null){
             if($admin){
                 $this->admin=$admin;
                 return $this;
@@ -34,6 +34,6 @@ class Edit extends \Block\Core\Template
                 $this->setAdmin();
             }
             return $this->admin;
-        }
+        }*/
 }
 ?>

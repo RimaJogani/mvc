@@ -1,5 +1,6 @@
 <?php
 namespace Block\Admin\Product\Edit\Tabs;
+
 \Mage::loadFileByClassName('Block\Core\Template');
 \Mage::loadFileByClassName('Block\Core\Edit\Traits');
 /**
@@ -8,7 +9,7 @@ namespace Block\Admin\Product\Edit\Tabs;
 class Attribute  extends \Block\Core\Template
 {
     use \Block\Core\Edit\Traits;
-	 protected $attribute=null;
+	protected $attribute=null;
      
 
 	function __construct()

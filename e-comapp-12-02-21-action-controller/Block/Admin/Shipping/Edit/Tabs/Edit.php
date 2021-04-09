@@ -1,20 +1,20 @@
 <?php
 namespace Block\Admin\Shipping\Edit\Tabs;
-\Mage::loadFileByClassName('Block\Core\Template');
+\Mage::loadFileByClassName('Block\Core\Edit');
 
 /**
  * 
  */
-class Edit extends \Block\Core\Template
+class Edit extends \Block\Core\Edit
 {
-	     protected $shipping=null;
+	     //protected $shipping=null;
 	
 	function __construct()
 	{
 		$this->setTemplate('admin/shipping/edit/tabs/edit.php');
 	}
 
-	 public function setShipping($shipping = null){
+	 /*public function setShipping($shipping = null){
             if($shipping){
                 $this->shipping=$shipping;
                 return $this;
@@ -36,6 +36,6 @@ class Edit extends \Block\Core\Template
             }
             return $this->shipping;
         }
-
+*/
 }
 ?>

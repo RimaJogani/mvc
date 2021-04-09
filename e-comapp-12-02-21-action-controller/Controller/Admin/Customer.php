@@ -24,11 +24,8 @@ class Customer extends \Controller\Core\Admin
                 'selector'=>'#ContentGrid',
                 'html'=>$grid
 
-              ],
-              [
-                'selector'=>'#ContentTabHtml',
-                'html'=>NULL
               ]
+              
             ]
 
             ];
@@ -49,19 +46,26 @@ class Customer extends \Controller\Core\Admin
       try
       {
         
-        $formhtml = \Mage::getBLock('block\Admin\Customer\form')->toHtml();
-        $tabshtml = \Mage::getBLock('block\Admin\Customer\edit\Tabs')->toHtml();
+        $edit = \Mage::getBLock('block\Admin\Customer\edit');
+        $customer=\Mage::getModel('model\Customer');
+        if($id=$this->getRequest()->getGet('id'))
+        {
+          $customer->load($id);
+          if(!$customer)
+          {
+            throw new Exception("Not record found", 1);
+            
+          }
+        }
+        $edit->setTableRow($customer);
+        $edithtml=$edit->toHtml();
         $response=[
               
               'element'=>[
               [
                 'selector'=>'#ContentGrid',
-                'html'=>$formhtml
+                'html'=>$edithtml
 
-              ],
-              [
-                'selector'=>'#ContentTabHtml',
-                'html'=>$tabshtml
               ]
             ]
 

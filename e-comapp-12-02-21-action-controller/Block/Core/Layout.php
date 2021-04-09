@@ -1,13 +1,13 @@
 <?php
 namespace Block\Core;
 \Mage::loadFileByClassName("Block\Core\Template");
-class Layout extends Template{
+class Layout extends \Block\Core\Template{
 
 	public function __construct(){
 		
 		parent::__construct();
-		//$this->setTemplate('core/layout/onecolumn.php');
-    $this->setTemplate('core/layout/three_column.php');
+		$this->setTemplate('core/layout/onecolumn.php');
+    //$this->setTemplate('core/layout/three_column.php');
 		$this->prepareChildren();
 		
 	}
@@ -26,7 +26,7 @@ class Layout extends Template{
               $footer = \Mage::getBlock('block\core\layout\footer');
               $this->addchild($footer,'footer');
               
-              $content =\Mage:: getBlock('Block\Core\Layout\Content');
+              $content =\Mage:: getBlock('Block\core\Layout\Content');
               $this->addChild($content,'content');
 
        }

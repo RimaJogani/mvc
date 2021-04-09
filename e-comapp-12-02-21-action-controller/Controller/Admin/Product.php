@@ -14,21 +14,24 @@ class Product extends \Controller\Core\Admin
 	
 	public function gridHtmlAction()
     {
+    	/*session_start();
+		session_unset();
+		session_destroy();*/
         try
         {
           $grid = \Mage::getBLock('block\Admin\product\grid')->tohtml();
-
+          
             $response=[
               
                'element'=>[
 
-               	[
+               	
 	                'selector'=>'#ContentGrid',
 	                'html'=>$grid
 
               	]
 
-            ]
+           
             ];
             header("content-type: application/json");
             echo json_encode($response);
@@ -49,7 +52,7 @@ class Product extends \Controller\Core\Admin
 		try
 		{
 			$edit = \Mage::getBLock('block\Admin\product\edit');
-			$product =\Mage::getBLock('model\product');
+			$product =\Mage::getModel('model\product');
 			if($id=$this->getRequest()->getGet('id'))
 			{
 				$product->load($id);
@@ -93,6 +96,7 @@ class Product extends \Controller\Core\Admin
 	{
 		try
 		{
+
 			if(!$this->getRequest()->isPost())
 			{
 				throw new Exception("invalid Request.");
@@ -115,14 +119,16 @@ class Product extends \Controller\Core\Admin
 			}
 			
 			$productData=$this->getRequest()->getPost('product');
-			print_r($productData);
+			//print_r($productData);
 			$product->setData($productData);
+			//print_r($product);
 			if($product->save())
 			{
 				$this->getMessage()->setSuccess('record save successfully.');
 			}else{
 				$this->getMessage()->setSuccess('unable to save record');
 			}
+			//print_r($product);
 			$this->redirect('gridHtml',NULL,NULL,true);
 			
 		}

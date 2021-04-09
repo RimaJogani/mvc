@@ -1,17 +1,3 @@
-<!-- <?php// if(!$this->getRequest()->getGet('id')): ?>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <h4 class="display-5">Registration Required</h4>
-            <p class="lead">Access Denied !</p>
-            <hr class="my-2">
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Login First !</a>
-            </p>
-        </div>
-    </div>
-    <?php
-   //else:
-?> -->
 
 <form method="post" id="mediaForm" action="<?php echo $this->getUrl('product\productmedia','check'); ?>" enctype="multipart/form-data">
      <div class="container pt-4">
@@ -45,7 +31,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $imageData = $this->getImageData($this->getRequest()->getGet('id'));
+                                <?php $imageData = $this->getImageData($this->getTableRow()->productId);
                                 
                                     if(!$imageData):?>
                                     
@@ -55,7 +41,7 @@
                                     <?php else: ?>
                                     <?php foreach ($imageData->getData() as $value) :?>                               
                                     <tr>
-                                        <td><img src="./skin/admin/images/<?php echo $value->productId.$value->imageName ?>" height="100px" width="100px" alt=""></td>
+                                        <td><img src="./skin/admin/images/product/<?php echo $value->productId.$value->imageName ?>" height="100px" width="100px" alt=""></td>
                                         <td><input type="text" name="image[<?php echo $value->productMediaId; ?>][imageLabel]" value="<?php echo $value->imageLabel; ?>"> </td>
                                         <td> 
                                             <label>
